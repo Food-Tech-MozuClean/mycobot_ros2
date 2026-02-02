@@ -29,14 +29,15 @@ class Slider_Subscriber(Node):
         )
         self.subscription
         
-        self.robot_m5 = os.popen("ls /dev/ttyUSB*").readline()[:-1]
-        self.robot_wio = os.popen("ls /dev/ttyACM*").readline()[:-1]
-        if self.robot_m5:
-            port = self.robot_m5
-        else:
-            port = self.robot_wio
-        self.get_logger().info("port:%s, baud:%d" % (port, 115200))
-        self.mc = MyCobot280(port, 115200)
+        # self.robot_m5 = os.popen("ls /dev/ttyUSB*").readline()[:-1]
+        # self.robot_wio = os.popen("ls /dev/ttyACM*").readline()[:-1]
+        # if self.robot_m5:
+        #     port = self.robot_m5
+        # else:
+        #     port = self.robot_wio
+        # self.get_logger().info("port:%s, baud:%d" % (port, 115200))
+        # self.mc = MyCobot280(port, 115200)
+        self.mc = MyCobot280("/dev/ttyTHS1", 1000000)    # for Orin
         time.sleep(0.05)
         if self.mc.get_fresh_mode() == 0:
             self.mc.set_fresh_mode(1)
